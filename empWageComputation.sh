@@ -1,6 +1,8 @@
 #!/bin/bash
 echo ">---< Employee Wage Computation >---<"
 
+declare -A dailyWage
+declare -A totalWage
 wagePerHour=20
 fullWorkingHours=16
 halfWorkingHours=8
@@ -10,21 +12,24 @@ totalWorkingHours=320
 workingDayInMonth=20
 day=1
 presentHours=0
-isPresent=1
+
+function workHours(){
+	local isPresent=$1
+	case $isPresent in
+		$fullDay)
+			echo $fullWorkingHours;;
+		$halfDay)
+			echo $halfWorkingHours;;
+		*) echo 0;;
+	esac
+}
+
 while [ $day -le $workingDayInMonth ] && [ $presentHours -lt $totalWorkingHours ]
 do
-	randomCheck=$(( RANDOM % 3 ))
-	case $randomCheck in
-		"2")
-			dailyHours=$fullWorkingHours;;
-		"1")
-			dailyHours=$halfWorkingHours;;
-		*) dailyHours=0;;
-	esac
-	dailyWage=$(( $wagePerHour * $dailyHours ))
-	echo "Daily Wages : $dailyWage"
+	isPresent=$(( RANDOM % 3))
+	dailyHours="$(workHours $isPresent)"
+	dailyWage["Day $day"]=$(( $wagePerHour * $dailyHours ))
 	presentHours=$(( $presentHours + $dailyHours ))
-	totalWage=$(( $presentHours * $wagePerHour ))
-	echo "Total Wages : $totalWage"
+	totalWage["Day $day"]=$(( $presentHours * $wagePerHour ))
 	((day++))
 done
