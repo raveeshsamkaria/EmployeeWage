@@ -3,14 +3,20 @@ echo ">---< Employee Wage Computation >---<"
 
 wagePerHour=20
 fullWorkingHours=16
+halfWorkingHours=8
+fullDay=2
+halfDay=1
 isPresent=1
-randomCheck=$(( RANDOM%2 ))
+randomCheck=$(( RANDOM % 3 ))
 if [ $isPresent -eq $randomCheck ]
 then
-        echo "Employee is Present"
+        dailyHours=$halfWorkingHours
+elif [ $isPresent -gt $randomCheck ]
+then
+        dailyHours=$fullWorkingHours
 else
-        echo "Not Present"
+	dailyHours=$0
 fi
 
-dailyWage=$(( $wagePerHour * $fullWorkingHours ))
+dailyWage=$(( $wagePerHour * $dailyHours ))
 echo "Daily Wages : $dailyWage"
