@@ -6,11 +6,12 @@ fullWorkingHours=16
 halfWorkingHours=8
 fullDay=2
 halfDay=1
+totalWorkingHours=320
 workingDayInMonth=20
 day=1
 presentHours=0
 isPresent=1
-while [ $day -le $workingDayInMonth ]
+while [ $day -le $workingDayInMonth ] && [ $presentHours -lt $totalWorkingHours ]
 do
 	randomCheck=$(( RANDOM % 3 ))
 	case $randomCheck in
