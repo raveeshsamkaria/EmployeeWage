@@ -8,15 +8,12 @@ fullDay=2
 halfDay=1
 isPresent=1
 randomCheck=$(( RANDOM % 3 ))
-if [ $isPresent -eq $randomCheck ]
-then
-        dailyHours=$halfWorkingHours
-elif [ $isPresent -gt $randomCheck ]
-then
-        dailyHours=$fullWorkingHours
-else
-	dailyHours=$0
-fi
-
+case $randomCheck in
+	"2")
+		dailyHours=$fullWorkingHours;;
+	"1")
+		dailyHours=$halfWorkingHours;;
+	*) dailyHours=0;;
+esac
 dailyWage=$(( $wagePerHour * $dailyHours ))
 echo "Daily Wages : $dailyWage"
